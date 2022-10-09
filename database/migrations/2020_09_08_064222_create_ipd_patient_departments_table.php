@@ -25,8 +25,6 @@ class CreateIpdPatientDepartmentsTable extends Migration
             $table->unsignedInteger('case_id');
             $table->boolean('is_old_patient')->nullable()->default(false);
             $table->unsignedBigInteger('doctor_id')->nullable();
-            $table->unsignedInteger('bed_type_id')->nullable();
-            $table->unsignedInteger('bed_id')->nullable();
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('patients')
@@ -41,13 +39,6 @@ class CreateIpdPatientDepartmentsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('bed_type_id')->references('id')->on('bed_types')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->foreign('bed_id')->references('id')->on('beds')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
         });
     }
 
