@@ -80,8 +80,6 @@ class BedAssign extends Model
      */
     protected $casts = [
         'id'                        => 'integer',
-        'bed_id'                    => 'integer',
-        'ipd_patient_department_id' => 'integer',
         'patient_id'                => 'integer',
         'case_id'                   => 'string',
     ];
@@ -92,7 +90,6 @@ class BedAssign extends Model
      * @var array
      */
     public static $rules = [
-        'bed_id'         => 'required',
         'case_id'        => 'required',
         'assign_date'    => 'required',
         'discharge_date' => 'nullable|after:assign_date',
@@ -107,13 +104,7 @@ class BedAssign extends Model
         return $this->belongsTo(Patient::class, 'patient_id');
     }
 
-    /**
-     * @return BelongsTo
-     */
-    public function bed()
-    {
-        return $this->belongsTo(Bed::class, 'bed_id');
-    }
+
 
     /**
      * @return BelongsTo
@@ -123,11 +114,4 @@ class BedAssign extends Model
         return $this->belongsTo(PatientCase::class, 'case_id', 'case_id');
     }
 
-    /**
-     * @return BelongsTo
-     */
-    public function ipdPatient()
-    {
-        return $this->belongsTo(IpdPatientDepartment::class, 'ipd_patient_department_id');
-    }
 }

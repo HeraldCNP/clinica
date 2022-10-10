@@ -13,11 +13,7 @@ class AddIpdPatientDepartmentIdToBedAssignsTable extends Migration
     public function up()
     {
         Schema::table('bed_assigns', function (Blueprint $table) {
-            $table->unsignedInteger('ipd_patient_department_id')->nullable()->after('bed_id');
 
-            $table->foreign('ipd_patient_department_id')->references('id')->on('ipd_patient_departments')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
         });
     }
 

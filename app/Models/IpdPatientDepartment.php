@@ -75,8 +75,6 @@ class IpdPatientDepartment extends Model
         'case_id'        => 'required',
         'admission_date' => 'required',
         'doctor_id'      => 'required',
-        'bed_type_id'    => 'nullable',
-        'bed_id'         => 'nullable',
         'weight'         => 'numeric|max:200',
         'height'         => 'numeric|max:7',
     ];
@@ -93,8 +91,7 @@ class IpdPatientDepartment extends Model
         'case_id',
         'is_old_patient',
         'doctor_id',
-        'bed_type_id',
-        'bed_id',
+
     ];
     /**
      * The attributes that should be casted to native types.
@@ -113,8 +110,7 @@ class IpdPatientDepartment extends Model
         'case_id'        => 'integer',
         'is_old_patient' => 'boolean',
         'doctor_id'      => 'integer',
-        'bed_type_id'    => 'integer',
-        'bed_id'         => 'integer',
+
     ];
 
     /**
@@ -141,29 +137,7 @@ class IpdPatientDepartment extends Model
         return $this->belongsTo(Doctor::class, 'doctor_id');
     }
 
-    /**
-     * @return BelongsTo
-     */
-    public function bedType()
-    {
-        return $this->belongsTo(BedType::class, 'bed_type_id');
-    }
 
-    /**
-     * @return BelongsTo
-     */
-    public function bed()
-    {
-        return $this->belongsTo(Bed::class, 'bed_id');
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function bedAssign()
-    {
-        return $this->belongsTo(BedAssign::class, 'bed_id');
-    }
 
     /*
      * @return hasOne

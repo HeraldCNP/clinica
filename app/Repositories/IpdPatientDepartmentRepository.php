@@ -38,8 +38,6 @@ class IpdPatientDepartmentRepository extends BaseRepository
         'case_id',
         'is_old_patient',
         'doctor_id',
-        'bed_group_id',
-        'bed_id',
     ];
 
     /**
@@ -69,8 +67,7 @@ class IpdPatientDepartmentRepository extends BaseRepository
             'id')->sort();
         $data['doctors'] = Doctor::with('user')->get()->where('user.status', '=', 1)->pluck('user.full_name',
             'id')->sort();
-        $data['bedTypes'] = BedType::pluck('title', 'id')->toArray();
-        natcasesort($data['bedTypes']);
+
         $data['ipdNumber'] = $this->model->generateUniqueIpdNumber();
 
         return $data;
@@ -181,17 +178,7 @@ class IpdPatientDepartmentRepository extends BaseRepository
         try {
             $input['is_old_patient'] = isset($input['is_old_patient']) ? true : false;
             $ipdPatientDepartment = IpdPatientDepartment::create($input);
-            $bedAssignData = [
-                'bed_id'                    => $input['bed_id'],
-                'patient_id'                => $input['patient_id'],
-                'case_id'                   => $ipdPatientDepartment->patientCase->case_id,
-                'assign_date'               => $input['admission_date'],
-                'ipd_patient_department_id' => $ipdPatientDepartment->id,
-                'status'                    => true,
-            ];
-            /** @var BedAssignRepository $bedAssign */
-            $bedAssign = App::make(BedAssignRepository::class);
-            $bedAssign->store($bedAssignData);
+            
         } catch (Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
         }
